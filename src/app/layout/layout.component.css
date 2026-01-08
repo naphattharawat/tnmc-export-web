@@ -1,0 +1,63 @@
+/* Enhanced styling for Clarity vertical nav */
+.content-container{
+	display:flex;
+	gap:18px;
+	align-items:flex-start;
+}
+
+clr-vertical-nav{
+	width:220px;
+	padding:14px;
+	/* slightly stronger bluish panel so it reads as a distinct column */
+	background: linear-gradient(180deg,#eaf6ff,#e1f0ff);
+	border-radius:10px;
+	border:1px solid rgba(16,24,40,0.08);
+	box-shadow: 0 10px 26px rgba(16,24,40,0.06);
+	/* clear divider between nav and content */
+	border-right: 1px solid rgba(16,24,40,0.06);
+}
+
+/* Target Clarity vertical nav links */
+clr-vertical-nav a[routerLink], clr-vertical-nav a[routerLink] :is(cd-icon, .nav-icon){
+	text-decoration:none;
+}
+
+clr-vertical-nav a[routerLink] {
+	display:flex;
+	align-items:center;
+	gap:10px;
+	padding:10px 12px;
+	color:#1f3447; /* darker for better contrast on bluish background */
+	border-radius:8px;
+	margin:6px 0;
+	font-weight:600;
+	transition: all 160ms ease;
+}
+
+clr-vertical-nav a[routerLink]:hover{
+	background: rgba(25,118,210,0.08);
+	color:#063a7a;
+	transform: translateY(-1px);
+}
+
+/* active link: use Clarity's expected 'active' class */
+clr-vertical-nav a.active{
+	background: linear-gradient(90deg,#0f66b3,#1976d2);
+	color:#fff !important;
+	box-shadow: 0 10px 30px rgba(25,118,210,0.16);
+}
+
+/* Ensure the content area reads as a separate white surface */
+.content-area{
+	background: #ffffff;
+	padding:18px;
+	border-radius:8px;
+	min-height:420px;
+}
+
+/* smaller screens: collapse spacing */
+@media (max-width:720px){
+	clr-vertical-nav{ width:160px; padding:8px }
+	clr-vertical-nav a[routerLink]{ padding:8px 10px; font-size:14px }
+}
+

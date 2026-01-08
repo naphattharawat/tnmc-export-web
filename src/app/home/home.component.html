@@ -1,0 +1,51 @@
+<div class="home-container">
+	<div class="status-pill" aria-disabled="true"
+		[class.fetching]="status === 'process'"
+		[class.done]="status === 'done'"
+		aria-live="polite">
+		สถานะ : {{ getStatusText() }}
+	</div>
+	<div class="top-row">
+		<button class="manual-btn" (click)="manualProcess()" [disabled]="status === 'process'">ประมวลผลแบบแมนวล</button>
+	</div>
+
+	<div class="home-box">
+		<div class="stepper" role="list">
+			<ng-container *ngFor="let step of steps; let i = index">
+				<div class="step" [class.active]="i+1 === activeStep" [class.in-progress]="steps[i].state === 'in-progress'" [class.done]="steps[i].state === 'done'">
+					<div class="step-marker">
+						<span *ngIf="steps[i].state === 'done'" class="check">✓</span>
+						<span *ngIf="steps[i].state !== 'done'" class="number">{{ i+1 }}</span>
+					</div>
+					<div class="step-label">{{ labelFor(i) }}</div>
+				</div>
+
+				<div *ngIf="i+1 < steps.length" class="connector" [class.active]="steps[i].state === 'done'" aria-hidden="true"></div>
+			</ng-container>
+		</div>
+	</div>
+
+<div class="status-table-wrap">
+	<h3>รายการสถานะแบบละเอียด</h3>
+	<table class="status-table">
+		<thead>
+			<tr>
+				<th>วันที่</th>
+				<th>สถานะ</th>
+				<th>รายละเอียด</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let log of statusLogs">
+				<td>{{ log.date | date:'short' }}</td>
+				<td>{{ log.status }}</td>
+				<td>{{ log.detail }}</td>
+			</tr>
+			<tr *ngIf="statusLogs.length === 0">
+				<td colspan="3" class="empty">ยังไม่มีรายการ</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+</div>
