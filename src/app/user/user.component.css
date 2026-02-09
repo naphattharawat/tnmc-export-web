@@ -1,0 +1,31 @@
+.user-page {
+  padding: 16px;
+}
+.add-form {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.add-form input {
+  padding: 6px 8px;
+}
+
+.user-input {
+  padding: 8px 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #111827;
+  font-size: 0.95rem;
+  min-width: 220px;
+}
+
+.user-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+.datagrid-footer {
+  padding: 8px;
+}

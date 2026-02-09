@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, firstValueFrom, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
@@ -14,6 +14,11 @@ interface LoginResponse {
   token?: string;
   message?: string;
   user?: any;
+}
+
+interface ThaidTokenResponse {
+  token?: string;
+  access_token?: string;
 }
 
 @Injectable({
@@ -60,6 +65,22 @@ export class LoginService {
   }
 
   /**
+   * แลก code จาก THAID เพื่อรับ token
+   */
+  async exchangeThaidCode(code: string, state?: string): Promise<string | null> {
+    const payload: { code: string; state?: string } = { code };
+    if (state) {
+      payload.state = state;
+    }
+
+    const response = await firstValueFrom(
+      this.http.post<ThaidTokenResponse>(`${this.apiUrl}/thaid/callback`, payload)
+    );
+
+    return response?.token || response?.access_token || null;
+  }
+
+  /**
    * จัดการ error จาก API
    */
   private handleError(error: HttpErrorResponse): Observable<never> {
@@ -78,10 +99,10 @@ export class LoginService {
    * ออกจากระบบ
    */
   logout(): void {
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('username');
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    sessionStorage.removeItem('isLoggedIn');
+    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('user');
   }
 
   /**

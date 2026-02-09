@@ -10,6 +10,9 @@ import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ClarityModule } from "@clr/angular";
 import { LayoutComponent } from './layout/layout.component';
+import { SettingComponent } from './setting/setting.component';
+import { UserComponent } from './user/user.component';
+import { ThaidCallbackComponent } from './thaid-callback/thaid-callback.component';
 
 import '@cds/core/icon/register.js';
 import { ClarityIcons, userIcon, vmBugIcon, cloudIcon, folderIcon } from '@cds/core/icon';
@@ -23,7 +26,10 @@ ClarityIcons.addIcons(userIcon, vmBugIcon, cloudIcon, folderIcon);
     LoginComponent,
     HomeComponent,
     LayoutComponent,
-    HistoryComponent
+    HistoryComponent,
+    SettingComponent,
+    UserComponent,
+    ThaidCallbackComponent
   ],
   imports: [
     BrowserModule,

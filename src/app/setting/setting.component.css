@@ -1,0 +1,171 @@
+.setting-container {
+  padding: 24px 16px 40px;
+  background: linear-gradient(180deg, #f6f8fb 0%, #ffffff 100%);
+  min-height: 100%;
+}
+
+.setting-card {
+  max-width: 1280px;
+  margin: 24px auto;
+  padding: 0;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+  border: 1px solid #eef1f6;
+}
+
+.card-header {
+  padding: 20px 24px 16px;
+  background: #ffffff;
+  border-bottom: 1px solid #eef1f6;
+}
+
+.setting-card .header-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #1f2a44;
+}
+
+.setting-card .header-sub {
+  margin-top: 6px;
+  font-size: 0.92rem;
+  color: #6b7280;
+}
+
+.card-block {
+  padding: 20px 24px 24px;
+  background: #ffffff;
+}
+
+.date-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.date-row:last-child {
+  margin-bottom: 0;
+}
+
+.date-label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.date-inputs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.select-field {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+}
+
+.select-label {
+  display: block;
+  font-size: 0.78rem;
+  color: #6b7280;
+  margin-bottom: 6px;
+}
+
+.select-control {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-size: 0.95rem;
+  color: #111827;
+  padding: 4px 0;
+  outline: none;
+}
+
+.select-control:focus {
+  outline: none;
+}
+
+.date-actions-col {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-top: 30px;
+  width: 120px;
+}
+
+.actions {
+  margin-top: 18px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.saved {
+  color: #16a34a;
+  font-weight: 500;
+  margin-left: 6px;
+}
+
+.note {
+  margin-top: 10px;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.col-main {
+  flex: 1 1 auto;
+}
+
+.col-action {
+  flex: 0 0 auto;
+}
+
+@media (max-width: 640px) {
+  .setting-card {
+    margin: 16px auto;
+  }
+
+  .card-header,
+  .card-block {
+    padding: 16px;
+  }
+
+  .date-row,
+  .row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .date-actions-col {
+    width: 100%;
+    padding-top: 0;
+    justify-content: flex-start;
+  }
+
+  .date-inputs {
+    grid-template-columns: 1fr;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 1024px) {
+  .date-inputs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

@@ -1,0 +1,44 @@
+<div class="user-page">
+  <h2>จัดการผู้ใช้</h2>
+
+  <section class="add-form">
+    <label>เลขบัตรประชาชน</label>
+    <input class="user-input" [(ngModel)]="newUser.cid" placeholder="เลขบัตรประชาชน" />
+    <label>ชื่อ-สกุล</label>
+    <input class="user-input" [(ngModel)]="newUser.name" placeholder="ชื่อ-สกุล" />
+    <button class="btn btn-sm btn-primary" (click)="addUser()">เพิ่มผู้ใช้</button>
+  </section>
+
+  <clr-datagrid>
+    <clr-dg-column>เลขบัตรประชาชน</clr-dg-column>
+    <clr-dg-column>Full Name</clr-dg-column>
+    <clr-dg-column>Actions</clr-dg-column>
+
+    <clr-dg-row *ngFor="let u of users" [clrDgItem]="u">
+      <clr-dg-cell>
+        <ng-container *ngIf="!u.editing">{{u.cid}}</ng-container>
+        <ng-container *ngIf="u.editing"><input class="user-input" [(ngModel)]="u.cid" /></ng-container>
+      </clr-dg-cell>
+
+      <clr-dg-cell>
+        <ng-container *ngIf="!u.editing">{{u.name}}</ng-container>
+        <ng-container *ngIf="u.editing"><input class="user-input" [(ngModel)]="u.name" /></ng-container>
+      </clr-dg-cell>
+
+      <clr-dg-cell>
+        <ng-container *ngIf="!u.editing">
+          <button class="btn btn-sm btn-outline" (click)="startEdit(u)">แก้ไข</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteUser(u)">ลบ</button>
+        </ng-container>
+        <ng-container *ngIf="u.editing">
+          <button class="btn btn-sm btn-primary" (click)="saveEdit(u)">บันทึก</button>
+          <button class="btn btn-sm" (click)="cancelEdit(u)">ยกเลิก</button>
+        </ng-container>
+      </clr-dg-cell>
+    </clr-dg-row>
+
+    <clr-dg-footer>
+      <div class="datagrid-footer">รวม {{users.length}} รายการ</div>
+    </clr-dg-footer>
+  </clr-datagrid>
+</div>

@@ -1,0 +1,9 @@
+<div class="callback-page">
+  <div class="callback-card">
+    <div class="title">THAID Callback</div>
+    <div class="status">{{ status }}</div>
+    <div *ngIf="message" class="message">{{ message }}</div>
+    <div class="hint" *ngIf="message">กรุณาอย่าปิดหน้านี้จนกว่าการเชื่อมต่อจะเสร็จสมบูรณ์</div>
+    <a class="back-link" routerLink="/login">กลับไปหน้าเข้าสู่ระบบ</a>
+  </div>
+</div>
