@@ -1,18 +1,43 @@
 <div class="user-page">
-  <h2>จัดการผู้ใช้</h2>
+  <div class="user-hero">
+    <div class="hero-text">
+      <h2>จัดการผู้ใช้</h2>
+      <p>เพิ่ม แก้ไข และดูรายการผู้ใช้งานทั้งหมดในระบบ</p>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card">
+        <div class="stat-label">ผู้ใช้ทั้งหมด</div>
+        <div class="stat-value">{{ users.length }} คน</div>
+      </div>
+    </div>
+  </div>
 
-  <section class="add-form">
-    <label>เลขบัตรประชาชน</label>
-    <input class="user-input" [(ngModel)]="newUser.cid" placeholder="เลขบัตรประชาชน" />
-    <label>ชื่อ-สกุล</label>
-    <input class="user-input" [(ngModel)]="newUser.name" placeholder="ชื่อ-สกุล" />
-    <button class="btn btn-sm btn-primary" (click)="addUser()">เพิ่มผู้ใช้</button>
+  <section class="user-card add-form">
+    <div class="form-grid">
+      <div class="form-field">
+        <label>เลขบัตรประชาชน</label>
+        <input class="user-input" [(ngModel)]="newUser.cid" placeholder="xxxxxxxxxx" />
+      </div>
+      <div class="form-field">
+        <label>ชื่อ-สกุล</label>
+        <input class="user-input" [(ngModel)]="newUser.name" placeholder="สมใจ มีจริง" />
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="user-btn primary" (click)="addUser()">เพิ่มผู้ใช้</button>
+      <button class="user-btn ghost" type="button" (click)="resetForm()">ล้างค่า</button>
+    </div>
   </section>
 
-  <clr-datagrid>
+  <section class="user-card grid-card">
+    <div class="table-header">
+      <div class="table-title">รายการผู้ใช้</div>
+      <!-- <div class="table-meta">รวม {{ users.length }} รายการ</div> -->
+    </div>
+    <clr-datagrid class="user-grid">
     <clr-dg-column>เลขบัตรประชาชน</clr-dg-column>
-    <clr-dg-column>Full Name</clr-dg-column>
-    <clr-dg-column>Actions</clr-dg-column>
+    <clr-dg-column>ชื่อ-สกุล</clr-dg-column>
+    <clr-dg-column>#</clr-dg-column>
 
     <clr-dg-row *ngFor="let u of users" [clrDgItem]="u">
       <clr-dg-cell>
@@ -27,18 +52,20 @@
 
       <clr-dg-cell>
         <ng-container *ngIf="!u.editing">
-          <button class="btn btn-sm btn-outline" (click)="startEdit(u)">แก้ไข</button>
-          <button class="btn btn-sm btn-danger" (click)="deleteUser(u)">ลบ</button>
+          <button class="user-btn subtle" (click)="startEdit(u)">แก้ไข</button>
+          <button class="user-btn danger" (click)="deleteUser(u)">ลบ</button>
         </ng-container>
         <ng-container *ngIf="u.editing">
-          <button class="btn btn-sm btn-primary" (click)="saveEdit(u)">บันทึก</button>
-          <button class="btn btn-sm" (click)="cancelEdit(u)">ยกเลิก</button>
+          <button class="user-btn primary" (click)="saveEdit(u)">บันทึก</button>
+          <button class="user-btn ghost" (click)="cancelEdit(u)">ยกเลิก</button>
         </ng-container>
       </clr-dg-cell>
     </clr-dg-row>
 
-    <clr-dg-footer>
-      <div class="datagrid-footer">รวม {{users.length}} รายการ</div>
-    </clr-dg-footer>
-  </clr-datagrid>
+      <clr-dg-placeholder>ยังไม่มีผู้ใช้ในระบบ</clr-dg-placeholder>
+      <!-- <clr-dg-footer>
+        <div class="datagrid-footer">รวม {{users.length}} รายการ</div>
+      </clr-dg-footer> -->
+    </clr-datagrid>
+  </section>
 </div>

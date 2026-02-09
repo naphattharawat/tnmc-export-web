@@ -38,6 +38,10 @@ export class UserComponent implements OnInit {
     void this.saveUser(user);
   }
 
+  resetForm(): void {
+    this.newUser = { cid: '', name: '' };
+  }
+
   startEdit(u: User): void {
     this.backups[this.getBackupKey(u)] = { ...u };
     u.editing = true;

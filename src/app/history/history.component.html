@@ -1,1 +1,66 @@
-<p>history works!</p>
+<div class="history-container">
+  <div class="history-header">
+    <div class="title-block">
+      <h2>ประวัติการประมวลผล</h2>
+      <p>แสดงข้อมูลจากวันที่ปัจจุบันย้อนกลับ</p>
+    </div>
+    <button class="refresh-btn" type="button" (click)="load()" [disabled]="isLoading">
+      รีเฟรช
+    </button>
+  </div>
+  <div *ngIf="errorMessage" class="error-banner">{{ errorMessage }}</div>
+
+  <div class="table-wrap">
+    <table class="history-table">
+      <thead>
+        <tr>
+          <th>วันที่</th>
+          <th>สถานะ</th>
+          <th>รายละเอียด</th>
+          <th>ดาวน์โหลด</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of rows">
+          <td class="cell-date">
+            <div class="date-text">{{ row.date ? (row.date | date:'short') : '-' }}</div>
+          </td>
+          <td class="cell-status">
+            <span class="status-pill">{{ row.state_name }}</span>
+          </td>
+          <td class="cell-detail">
+            <div *ngIf="row.details.length > 0; else noDetails" class="detail-list">
+              <div *ngFor="let detail of row.details" class="detail-item">
+                <span *ngIf="detail.time" class="detail-time">{{ detail.time | date:'shortTime' }}</span>
+                <span class="detail-text">{{ detail.text }}</span>
+              </div>
+            </div>
+            <ng-template #noDetails>
+              <span class="detail-empty">-</span>
+            </ng-template>
+          </td>
+          <td class="cell-download">
+            <div class="download-group">
+              <button
+                *ngFor="let file of row.files"
+                type="button"
+                class="download-btn"
+                [class.disabled]="!file.url"
+                [disabled]="!file.url"
+                (click)="downloadFile(file.url)"
+              >
+                {{ file.label }}
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr *ngIf="rows.length === 0 && !isLoading">
+          <td colspan="4" class="empty">ยังไม่มีรายการ</td>
+        </tr>
+        <tr *ngIf="isLoading">
+          <td colspan="4" class="empty">กำลังโหลดข้อมูล...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
