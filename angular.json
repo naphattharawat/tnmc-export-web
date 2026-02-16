@@ -47,15 +47,26 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
+                  "maximumWarning": "2mb",
                   "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
                 }
               ],
+              "allowedCommonJsDependencies": [
+                "sweetalert2"
+              ],
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": false
+                },
+                "fonts": true
+              },
               "outputHashing": "all"
             },
             "development": {
