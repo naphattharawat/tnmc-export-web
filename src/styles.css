@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global background to match user page */
+:root {
+  --page-bg: radial-gradient(circle at 12% 18%, rgba(56, 189, 248, 0.18), transparent 48%),
+              radial-gradient(circle at 85% 12%, rgba(59, 130, 246, 0.14), transparent 40%),
+              linear-gradient(180deg, #eef6ff 0%, #f6f9ff 55%, #f9fbff 100%);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--page-bg);
+}
+
+app-root,
+.main-container,
+.content-container,
+.content-area {
+  background: transparent;
+}

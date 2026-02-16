@@ -49,9 +49,9 @@ clr-vertical-nav a.active{
 
 /* Ensure the content area reads as a separate white surface */
 .content-area{
-	background: #ffffff;
+	background: transparent;
 	padding:18px;
-	border-radius:8px;
+	border-radius:0;
 	min-height:420px;
 }
 
@@ -60,4 +60,3 @@ clr-vertical-nav a.active{
 	clr-vertical-nav{ width:160px; padding:8px }
 	clr-vertical-nav a[routerLink]{ padding:8px 10px; font-size:14px }
 }
-

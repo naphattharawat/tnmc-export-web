@@ -87,6 +87,13 @@
   box-shadow:0 6px 18px rgba(76,175,80,0.08);
 }
 
+/* error - red */
+.status-pill.error{
+  background: linear-gradient(180deg,#ffe5e5,#ffd1d1);
+  color:#8a0b0b;
+  box-shadow:0 6px 18px rgba(244,67,54,0.12);
+}
+
 .home-box{
   width:100%;
   max-width:900px;
@@ -167,4 +174,3 @@
   .step-label{ font-size:13px }
   .step-marker{ width:34px; height:34px }
 }
-

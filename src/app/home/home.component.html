@@ -2,11 +2,12 @@
 	<div class="status-pill" aria-disabled="true"
 		[class.fetching]="status === 'process'"
 		[class.done]="status === 'done'"
+		[class.error]="status === 'error'"
 		aria-live="polite">
 		สถานะ : {{ getStatusText() }}
 	</div>
 	<div class="top-row">
-		<button class="manual-btn" (click)="manualProcess()" [disabled]="status === 'process'">ประมวลผลแบบแมนวล</button>
+		<button class="manual-btn" (click)="manualProcess()" [disabled]="isProcessing">ประมวลผลแบบแมนวล</button>
 	</div>
 
 	<div class="home-box">
@@ -46,6 +47,11 @@
 			</tr>
 		</tbody>
 	</table>
+
+	<div class="export-actions" *ngIf="status === 'done'">
+		<button class="manual-btn" (click)="exportDead()" [disabled]="!currentLogId">Export ข้อมูลผู้เสียชีวิต</button>
+		<button class="manual-btn" (click)="exportInvalidDob()" [disabled]="!currentLogId">Export ข้อมูลที่วันเกิดผิด</button>
+	</div>
 </div>
 
 </div>
