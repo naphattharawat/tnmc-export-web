@@ -1,22 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { HistoryService, HistoryItem } from '../service/history.service';
+import { ProcessService } from '../service/process.service';
 
 interface DetailView {
   text: string;
   time?: string | null;
 }
 
-interface FileView {
-  label: string;
-  url?: string | null;
-}
-
 interface HistoryView {
   id: string;
   date?: string | null;
   state_name: string;
+  state_id?: number | null;
   details: DetailView[];
-  files: FileView[];
 }
 
 @Component({
@@ -29,7 +25,7 @@ export class HistoryComponent implements OnInit {
   errorMessage = '';
   rows: HistoryView[] = [];
 
-  constructor(private historyService: HistoryService) {}
+  constructor(private historyService: HistoryService, private processService: ProcessService) {}
 
   ngOnInit(): void {
     this.load();
@@ -49,9 +45,28 @@ export class HistoryComponent implements OnInit {
     }
   }
 
-  downloadFile(url?: string | null): void {
-    if (!url) return;
-    window.open(url, '_blank');
+  async exportBirth(row: HistoryView): Promise<void> {
+    if (!row?.id) return;
+    const token = this.getToken();
+    if (!token) return;
+    try {
+      const blob = await this.processService.exportBirth(row.id, token);
+      this.downloadBlob(blob, `export_birth_date_${row.id}.xlsx`);
+    } catch {
+      // ignore export errors
+    }
+  }
+
+  async exportDeath(row: HistoryView): Promise<void> {
+    if (!row?.id) return;
+    const token = this.getToken();
+    if (!token) return;
+    try {
+      const blob = await this.processService.exportDeath(row.id, token);
+      this.downloadBlob(blob, `export_death_${row.id}.xlsx`);
+    } catch {
+      // ignore export errors
+    }
   }
 
   private transform(items: HistoryItem[]): HistoryView[] {
@@ -64,6 +79,7 @@ export class HistoryComponent implements OnInit {
       const log = item?.log ?? item ?? {};
       const date = this.pickDate(log);
       const stateName = item?.state_name ?? item?.state_name ?? '-';
+      const stateId = this.pickNumber(item, log, ['state_id', 'stateId', 'state', 'status', 'step']);
       const details = (item?.details ?? []).map((detail) => ({
         text: this.detailText(detail),
         time: this.pickDate(detail),
@@ -73,8 +89,8 @@ export class HistoryComponent implements OnInit {
         id: String(this.pickValue(log, ['id', 'log_id', 'logId', 'ID']) ?? `row-${index}`),
         date,
         state_name: String(stateName),
+        state_id: stateId,
         details,
-        files: this.buildFiles(log),
       };
     });
 
@@ -127,6 +143,16 @@ export class HistoryComponent implements OnInit {
     return value ? String(value) : null;
   }
 
+  private pickNumber(primary: Record<string, any>, fallback: Record<string, any>, keys: string[]): number | null {
+    for (const key of keys) {
+      const value = primary?.[key] ?? fallback?.[key];
+      if (value === undefined || value === null || value === '') continue;
+      const parsed = typeof value === 'number' ? value : parseInt(String(value), 10);
+      if (!Number.isNaN(parsed)) return parsed;
+    }
+    return null;
+  }
+
   private detailText(detail: Record<string, any>): string {
     const keys = ['detail', 'message', 'description', 'status', 'state', 'state_id', 'step', 'name'];
     const value = this.pickValue(detail, keys);
@@ -139,18 +165,19 @@ export class HistoryComponent implements OnInit {
     return pairs.length ? pairs.join(' | ') : '-';
   }
 
-  private buildFiles(log: Record<string, any>): FileView[] {
-    const fileCandidates = [
-      { label: 'ไฟล์ที่ 1', keys: ['file1', 'file_1', 'file01', 'file_a', 'file_alive', 'file_live'] },
-      { label: 'ไฟล์ที่ 2', keys: ['file2', 'file_2', 'file02', 'file_b', 'file_dead', 'file_death'] },
-      { label: 'ไฟล์ที่ 3', keys: ['file3', 'file_3', 'file03', 'file_c', 'file_lost', 'file_missing'] },
-    ];
+  private getToken(): string | null {
+    return sessionStorage.getItem('token') || localStorage.getItem('token');
+  }
 
-    return fileCandidates.map((file) => {
-      const value = this.pickValue(log, file.keys);
-      const url = value ? String(value) : null;
-      return { label: file.label, url };
-    });
+  private downloadBlob(blob: Blob, filename: string): void {
+    const url = window.URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = filename;
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+    window.URL.revokeObjectURL(url);
   }
 
 }

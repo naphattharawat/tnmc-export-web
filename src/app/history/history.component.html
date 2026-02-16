@@ -40,16 +40,24 @@
             </ng-template>
           </td>
           <td class="cell-download">
-            <div class="download-group">
+            <div class="download-group" *ngIf="row.state_id === 8">
               <button
-                *ngFor="let file of row.files"
                 type="button"
                 class="download-btn"
-                [class.disabled]="!file.url"
-                [disabled]="!file.url"
-                (click)="downloadFile(file.url)"
+                [class.disabled]="!row.id"
+                [disabled]="!row.id"
+                (click)="exportDeath(row)"
               >
-                {{ file.label }}
+                Export ข้อมูลผู้เสียชีวิต
+              </button>
+              <button
+                type="button"
+                class="download-btn"
+                [class.disabled]="!row.id"
+                [disabled]="!row.id"
+                (click)="exportBirth(row)"
+              >
+                Export ข้อมูลที่วันเกิดผิด
               </button>
             </div>
           </td>
