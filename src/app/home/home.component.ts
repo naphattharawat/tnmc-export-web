@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   // numeric state from backend (0..8)
   processState: number | null = null;
   isProcessing = false;
+  statusText: string | null = null;
   private rowsByState: Record<number, number> = {};
   currentLogId: string | null = null;
   private pollTimer: ReturnType<typeof setInterval> | null = null;
@@ -123,6 +124,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   getStatusText(): string {
+    const translated = this.translateStatusText(this.statusText);
+    if (translated) return translated;
     if (this.status === 'error') return 'การประมวลผล Error';
     const fetchRows = this.rowsForState(2);
     if (this.processState === 2 && fetchRows !== null) {
@@ -136,7 +139,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       return `ตรวจสอบข้อมูลกับ checkpop สำเร็จ ${checkpopRows} รายการ`;
     }
     if (this.processState !== null) return this.stateLabel(this.processState);
-    return '-';
+    return 'ยังไม่เริ่ม/ไม่มี state';
   }
 
   pushLog(status: string, detail: string) {
@@ -274,6 +277,11 @@ export class HomeComponent implements OnInit, OnDestroy {
       if (typeof res?.isProcessing === 'boolean') {
         this.isProcessing = res.isProcessing;
       }
+      if (res?.statusText !== undefined && res?.statusText !== null) {
+        this.statusText = String(res.statusText);
+      } else {
+        this.statusText = null;
+      }
       this.updateStatus();
       if (Array.isArray(res?.details)) {
         this.statusLogs = this.mapDetails(res.details);
@@ -394,6 +402,25 @@ export class HomeComponent implements OnInit, OnDestroy {
       return;
     }
     this.status = 'idle';
+  }
+
+  private translateStatusText(statusText: string | null): string | null {
+    if (!statusText) return null;
+    const key = statusText.trim();
+    switch (key) {
+      case 'running':
+        return 'กำลังทำงาน';
+      case 'done':
+        return 'เสร็จแล้ว';
+      case 'idle':
+        return 'ยังไม่เริ่ม/ไม่มี state';
+      case 'paused_by_schedule':
+        return 'หยุดชั่วคราวเพราะอยู่นอกเวลาที่กำหนด';
+      case 'stopped_unexpected':
+        return 'Error เกิดข้อผิดขึ้นระหว่างประมวลผล';
+      default:
+        return key;
+    }
   }
 
 }

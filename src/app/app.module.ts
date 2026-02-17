@@ -17,6 +17,7 @@ import { ThaidCallbackComponent } from './thaid-callback/thaid-callback.componen
 import '@cds/core/icon/register.js';
 import { ClarityIcons, userIcon, vmBugIcon, cloudIcon, folderIcon } from '@cds/core/icon';
 import { HistoryComponent } from './history/history.component';
+import { LogsComponent } from './logs/logs.component';
 
 ClarityIcons.addIcons(userIcon, vmBugIcon, cloudIcon, folderIcon);
 
@@ -27,6 +28,7 @@ ClarityIcons.addIcons(userIcon, vmBugIcon, cloudIcon, folderIcon);
     HomeComponent,
     LayoutComponent,
     HistoryComponent,
+    LogsComponent,
     SettingComponent,
     UserComponent,
     ThaidCallbackComponent

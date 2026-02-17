@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { SettingComponent } from './setting/setting.component';
 import { UserComponent } from './user/user.component';
 import { ThaidCallbackComponent } from './thaid-callback/thaid-callback.component';
+import { LogsComponent } from './logs/logs.component';
 import { CheckauthGuard } from './guard/checkauth.guard';
 
 const routes: Routes = [
@@ -19,9 +20,10 @@ const routes: Routes = [
     canActivateChild: [CheckauthGuard],
     children: [
       { path: 'home', component: HomeComponent },
-      { path: 'history', component: HistoryComponent }
-      , { path: 'setting', component: SettingComponent }
-      , { path: 'user', component: UserComponent }
+      { path: 'history', component: HistoryComponent },
+      { path: 'logs', component: LogsComponent },
+      { path: 'setting', component: SettingComponent },
+      { path: 'user', component: UserComponent }
     ]
   }
 ];

@@ -5,6 +5,13 @@
 	align-items:flex-start;
 }
 
+.brand-logo{
+	width:28px;
+	height:28px;
+	object-fit:contain;
+	display:block;
+}
+
 clr-vertical-nav{
 	width:220px;
 	padding:14px;

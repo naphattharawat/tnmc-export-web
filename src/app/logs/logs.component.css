@@ -1,0 +1,79 @@
+.logs-container {
+  padding: 20px;
+}
+
+.logs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.title-block h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.title-block p {
+  margin: 4px 0 0;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.refresh-btn {
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.refresh-btn[disabled] {
+  background: #bfcfe6;
+  cursor: not-allowed;
+}
+
+.error-banner {
+  background: #ffe5e5;
+  color: #8a0b0b;
+  border: 1px solid #f5b5b5;
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.logs-box {
+  background: #0f172a;
+  color: #e5e7eb;
+  border-radius: 10px;
+  padding: 12px;
+  border: 1px solid #1f2937;
+  max-height: 70vh;
+  overflow: auto;
+}
+
+.logs-content {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.log-line {
+  padding: 2px 0;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+}
+
+.log-line:last-child {
+  border-bottom: none;
+}
+
+.empty {
+  text-align: center;
+  color: #6b7280;
+  padding: 18px 0;
+}
