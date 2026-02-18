@@ -20,7 +20,7 @@ export class LogsService {
 
   async getLogs(): Promise<string[]> {
     const response = await firstValueFrom(
-      this.http.get<LogsResponse>(`${this.apiUrl}/logs`)
+      this.http.get<LogsResponse>(`${this.apiUrl}/exports/logs`)
     );
     if (!response?.ok) return [];
     return Array.isArray(response.lines) ? response.lines : [];
