@@ -7,7 +7,7 @@
 		สถานะ : {{ getStatusText() }}
 	</div>
 	<div class="top-row">
-		<button class="manual-btn" (click)="manualProcess()" [disabled]="isProcessing">ประมวลผลแบบแมนวล</button>
+		<button class="manual-btn" (click)="manualProcess()" [disabled]="!canManualProcess()">ประมวลผลแบบแมนวล</button>
 	</div>
 
 	<div class="home-box">

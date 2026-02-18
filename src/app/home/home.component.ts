@@ -147,12 +147,23 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   manualProcess() {
-    if (this.isProcessing) return;
+    if (!this.canManualProcess()) return;
     // reset steps
     this.processService.process();
 
     this.recordCount = 0;
     this.fetchState();
+  }
+
+  canManualProcess(): boolean {
+    if (this.isProcessing) return false;
+
+    const statusKey = (this.statusText || '').trim();
+    if (statusKey === 'done' || statusKey === 'idle' || statusKey === 'stopped_unexpected') {
+      return true;
+    }
+
+    return this.status === 'done' || this.status === 'idle';
   }
 
   async exportDead(): Promise<void> {
