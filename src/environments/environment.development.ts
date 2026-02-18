@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  apiUrl:'http://localhost:3009',
-  thaidAuthUrl: 'http://localhost:3009/thaid/auth'
+  apiUrl:'http://172.16.30.149/api',
+  thaidAuthUrl: 'http://172.16.30.149/api/thaid/auth'
 };

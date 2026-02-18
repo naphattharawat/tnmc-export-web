@@ -120,10 +120,61 @@ export class LoginService {
   }
 
   /**
+   * รับ token จาก storage (session มาก่อน local)
+   */
+  getStoredToken(): string | null {
+    return sessionStorage.getItem('token') || localStorage.getItem('token');
+  }
+
+  /**
+   * ตรวจสอบว่า token ยังใช้งานได้ (มีและไม่หมดอายุ)
+   */
+  hasValidToken(): boolean {
+    const token = this.getStoredToken();
+    if (!token) return false;
+
+    if (this.isTokenExpired(token)) {
+      this.clearToken();
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * ตรวจสอบหมดอายุจาก claim exp (ถ้ามี)
+   */
+  isTokenExpired(token: string): boolean {
+    const payload = this.decodeJwtPayload(token);
+    const exp = payload?.['exp'];
+    if (typeof exp !== 'number') return false;
+    return Date.now() >= exp * 1000;
+  }
+
+  /**
    * รับข้อมูลผู้ใช้
    */
   getUserData(): any {
     const userData = localStorage.getItem('user');
     return userData ? JSON.parse(userData) : null;
+  }
+
+  private clearToken(): void {
+    sessionStorage.removeItem('token');
+    localStorage.removeItem('token');
+  }
+
+  private decodeJwtPayload(token: string): Record<string, unknown> | null {
+    const parts = token.split('.');
+    if (parts.length !== 3) return null;
+
+    try {
+      const base64Url = parts[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const padded = base64.padEnd(base64.length + ((4 - (base64.length % 4)) % 4), '=');
+      return JSON.parse(atob(padded)) as Record<string, unknown>;
+    } catch {
+      return null;
+    }
   }
 }

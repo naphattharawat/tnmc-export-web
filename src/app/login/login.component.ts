@@ -1,14 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
+import { LoginService } from '../service/login.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   isLoading = false;
   thaidAuthUrl = environment.thaidAuthUrl;
+
+  constructor(
+    private router: Router,
+    private loginService: LoginService
+  ) {}
+
+  ngOnInit(): void {
+    if (this.loginService.hasValidToken()) {
+      void this.router.navigate(['/home'], { replaceUrl: true });
+    }
+  }
 
   loginWithThaid(): void {
     if (!this.thaidAuthUrl) {
