@@ -414,6 +414,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         return 'เสร็จแล้ว';
       case 'idle':
         return 'ยังไม่เริ่ม/ไม่มี state';
+      case 'paused_by_lk403':
+        return 'หยุดชั่วคราวเพราะเกินโควต้า LK2';
       case 'paused_by_schedule':
         return 'หยุดชั่วคราวเพราะอยู่นอกเวลาที่กำหนด';
       case 'stopped_unexpected':
