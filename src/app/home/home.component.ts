@@ -118,6 +118,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (i === 1 && this.processState === 3 && checkpopRows !== null) {
       return `กำลังตรวจ checkpop ${checkpopRows} รายการ`;
     }
+    const lkRows = this.rowsForState(6) ?? this.rowsForState(7);
+    if (i === 3 && this.processState === 6 && lkRows !== null) {
+      return `กำลังตรวจสอบข้อมูลกับ LK ${lkRows} รายการ`;
+    }
+    if (i === 3 && this.processState !== null && this.processState >= 7 && lkRows !== null) {
+      return `ตรวจสอบข้อมูลกับ LK สำเร็จ ${lkRows} รายการ`;
+    }
     if (s.state === 'in-progress') return s.idleLabel;
     if (s.state === 'done') return s.doneLabel ?? s.idleLabel;
     return s.idleLabel;
