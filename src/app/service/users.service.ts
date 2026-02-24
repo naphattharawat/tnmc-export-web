@@ -21,6 +21,6 @@ export class UsersService {
   }
 
   async saveUser(user: UserPayload): Promise<void> {
-    await firstValueFrom(this.http.post<void>(`${this.apiUrl}/user`, user));
+    await firstValueFrom(this.http.post<void>(`${this.apiUrl}/users`, user));
   }
 }
